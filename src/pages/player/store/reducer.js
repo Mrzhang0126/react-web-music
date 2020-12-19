@@ -2,7 +2,7 @@ import { Map } from 'immutable';
 
 import * as actionTypes from './constants';
 
-const defaultState = Map({
+const initialState = Map({
   playList: [
     {
       "name": "有何不可",
@@ -214,7 +214,7 @@ const defaultState = Map({
   currentLyricIndex: 0
 });
 
-function reducer(state = defaultState, action) {
+function reducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.CHANGE_CURRENT_SONG:
       return state.set("currentSong", action.currentSong);

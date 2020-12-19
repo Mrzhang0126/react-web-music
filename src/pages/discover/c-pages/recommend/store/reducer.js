@@ -2,7 +2,7 @@ import { Map } from 'immutable';
 
 import * as actionTypes from './constants';
 
-const defaultState = Map({
+const initialState = Map({
   topBanners: [],
   hotRecommends: [],
   newAlbums: [],
@@ -12,7 +12,7 @@ const defaultState = Map({
   originRanking: {},
 });
 
-function reducer(state = defaultState, action) {
+function reducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.CHANGE_TOP_BANNERS:
       return state.set("topBanners", action.topBanners);
