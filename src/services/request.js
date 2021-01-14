@@ -7,23 +7,29 @@ const instance = axios.create({
   timeout: TIMEOUT
 });
 
-instance.interceptors.request.use(config => {
+// 添加请求拦截器
+instance.interceptors.request.use((config) => {
   // 1.发送网络请求时, 在界面的中间位置显示Loading的组件
-
   // 2.某一些请求要求用户必须携带token, 如果没有携带, 那么直接跳转到登录页面
-
   // 3.params/data序列化的操作
-
+  // const token = window.localStorage.getItem("token");
+  // if(token) {
+  //   config.headers["Authorization"] = token;
+  // }
+  
   return config;
-}, err => {
-
+}, (error) => {
+  // 对响应错误做点什么
+  return Promise.reject(error);
 });
 
-instance.interceptors.response.use(res => {
-  return res.data;
-}, err => {
-  if (err && err.response) {
-    switch (err.response.status) {
+
+// 添加响应拦截器
+instance.interceptors.response.use((response) => {
+  return response.data;
+}, (error) => {
+  if (error && error.response) {
+    switch (error.response.status) {
       case 400:
         console.log("请求错误");
         break;
@@ -34,7 +40,7 @@ instance.interceptors.response.use(res => {
         console.log("其他错误信息");
     }
   }
-  return err;
+  return Promise.reject(error);
 });
 
 export default instance;
