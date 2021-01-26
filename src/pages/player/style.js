@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const PlayerWrapper = styled.div`
   .content {
-    background: url(${require("@/assets/img/wrap-bg.png")}) repeat-y;
+    background: url(${require("@/assets/img/wrap-bg.png").default}) repeat-y;
     background-color: #fff;
     display: flex;
   }

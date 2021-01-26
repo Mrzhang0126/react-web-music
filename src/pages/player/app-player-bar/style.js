@@ -145,11 +145,11 @@ export const Operator = styled.div`
       background-position: ${props => {
         switch(props.sequence) {
           case 1:
-            return "-66px -248px"
+            return "-66px -248px";
           case 2:
-            return "-66px -344px"
+            return "-66px -344px";
           default:
-            return "-3px -344px"
+            return "-3px -344px";
         }
       }};
     }
@@ -157,10 +157,15 @@ export const Operator = styled.div`
     .playlist {
       width: 59px;
       background-position: -42px -68px;
-      color: #ccc;
-      text-align:center;
-      padding-left: 20px;
-      padding-top: 5px;
     }
   }
+`
+
+export const SongsCount = styled.div`
+  padding-left: 18px;
+  text-align: center;
+  color: #ccc;
+  position: fixed;
+  bottom: 1vh;
+  right: 1.1vw;
 `

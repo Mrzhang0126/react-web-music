@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TopBannerWrapper = styled.div`
+export const BannerWrapper = styled.div`
   background: url(${props => props.bgImage}) center center/6000px;
 
   .banner {

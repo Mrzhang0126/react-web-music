@@ -1,11 +1,11 @@
 import * as actionTypes from './constants';
 
-import { getNewAlbums } from '@/services/recommend';
-
 import { 
   getTopBanners,
   getHotRecommends,
-  getTopList
+  getNewAlbums,
+  getTopList,
+  getArtistList
 } from '@/services/recommend';
 
 const changeTopBannerAction = (res) => ({
@@ -38,6 +38,12 @@ const changeOriginRankingAction = (res) => ({
   originRanking: res.playlist
 })
 
+const changeSettleSingersAction = (res) => ({
+  type: actionTypes.CHANGE_SETTLE_SONGER,
+  settleSingers: res.artists
+})
+
+
 export const getTopBannerAction = () => {
   return dispatch => {
     getTopBanners().then(res => {
@@ -67,17 +73,25 @@ export const getTopListAction = (idx) => {
   return dispatch => {
     getTopList(idx).then(res => {
       switch (idx) {
+        case 3:
+          dispatch(changeUpRankingAction(res));
+          break;
         case 0:
           dispatch(changeNewRankingAction(res));
           break;
         case 2:
           dispatch(changeOriginRankingAction(res));
           break;
-        case 3:
-          dispatch(changeUpRankingAction(res));
-          break;
         default:
       }
     });
+  }
+}
+
+export const getSettleSingers = () => {
+  return dispath => {
+    getArtistList(5, 5001).then(res => {
+      dispath(changeSettleSingersAction(res))
+    })
   }
 }

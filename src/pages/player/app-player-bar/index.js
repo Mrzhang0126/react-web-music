@@ -9,6 +9,7 @@ import {
   changeCurrentLyricIndexAction 
 } from '../store/actionCreators';
 
+import AppPlayerPanel from '../app-player-panel';
 import { message } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { Slider } from 'antd';
@@ -16,7 +17,8 @@ import {
   PlaybarWrapper,
   Control,
   PlayInfo,
-  Operator
+  Operator,
+  SongsCount
 } from './style';
 
 export default memo(function AppPlayerBar() {
@@ -25,7 +27,9 @@ export default memo(function AppPlayerBar() {
   const [progress, setProgress] = useState(0);
   const [isChanging, setIsChanging] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-
+  const [duration, setDuration] = useState(0);
+  const [isShowPannel, setIsShowPanel] = useState(false);
+  
   // redux hook
   const { 
     currentSong, 
@@ -55,18 +59,20 @@ export default memo(function AppPlayerBar() {
     }).catch(err => {
       setIsPlaying(false);
     });
+    setDuration(currentSong.dt);
   }, [currentSong]);
 
   // other handle
   const picUrl = (currentSong.al && currentSong.al.picUrl) || "";
   const singerName = (currentSong.ar && currentSong.ar[0].name) || "未知歌手";
-  const duration = currentSong.dt || 0;
   const showDuration = formatDate(duration, "mm:ss");
   const showCurrentTime = formatDate(currentTime, "mm:ss");
 
   // handle function
   const playMusic = useCallback(() => {
-    isPlaying ? audioRef.current.pause(): audioRef.current.play();
+    isPlaying ? audioRef.current.pause(): audioRef.current.play().catch(err => {
+      setIsPlaying(false);
+    });
     setIsPlaying(!isPlaying);
   }, [isPlaying]);
 
@@ -180,15 +186,17 @@ export default memo(function AppPlayerBar() {
           <div className="right sprite_player">
             <button className="sprite_player btn volume"></button>
             <button className="sprite_player btn loop" onClick={e => changeSequence()}></button>
-            <button className="sprite_player btn playlist">
-              {playList.length}
-            </button>
+            <button className="sprite_player btn playlist"
+                    onClick={e => setIsShowPanel(!isShowPannel)}>
+            </button>         
           </div>
         </Operator>
+        <SongsCount>{playList.length}</SongsCount>
       </div>
       <audio ref={audioRef} 
              onTimeUpdate={e => timeUpdate(e)} 
              onEnded={e => handleMusicEnded()}/>
+      {isShowPannel && <AppPlayerPanel/>}
     </PlaybarWrapper>
   )
 });

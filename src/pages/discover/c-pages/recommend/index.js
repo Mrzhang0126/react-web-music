@@ -14,7 +14,7 @@ import {
   RecommendRight
 } from './style';
 
-export default memo(function Recommend(props) {
+function Recommend(props) {
   return (
     <RecommendWrapper>
       <TopBanner/>
@@ -32,7 +32,9 @@ export default memo(function Recommend(props) {
       </Content>
     </RecommendWrapper>
   )
-});
+}
+
+export default memo(Recommend);
 
 
 // function Recommend(props) {

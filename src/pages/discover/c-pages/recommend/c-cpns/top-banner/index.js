@@ -5,7 +5,7 @@ import { getTopBannerAction } from '../../store/actionCreators';
 
 import { Carousel } from 'antd';
 import {
-  TopBannerWrapper,
+  BannerWrapper,
   BannerLeft,
   BannerRight,
   BannerControl
@@ -38,7 +38,7 @@ export default memo(function TopBanner() {
   const bgImage = topBanners[currentIndex] && (topBanners[currentIndex].imageUrl + "?imageView&blur=40x20")
 
   return (
-    <TopBannerWrapper bgImage={bgImage}>
+    <BannerWrapper bgImage={bgImage}>
       <div className="banner wrap-v2">
         <BannerLeft>
           <Carousel effect="fade" autoplay ref={bannerRef} beforeChange={bannerChange}>
@@ -59,6 +59,6 @@ export default memo(function TopBanner() {
           <button className="btn right" onClick={e => bannerRef.current.next()}></button>
         </BannerControl>
       </div>
-    </TopBannerWrapper>
+    </BannerWrapper>
   )
 })
